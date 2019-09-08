@@ -5,7 +5,7 @@ A Happy Battle scenario for Scala programming exercises for beginners to Scala, 
 
 - 下载本项目源码
 - IDEA打开项目，配置JDK，Scala SDK
-- 找到测试类，运行示例如下：
+- 找到测试类BattleTest，运行示例如下：
 ```shell
 信息: ###########第1回合############
 左方出手：→_→ →_→ 
