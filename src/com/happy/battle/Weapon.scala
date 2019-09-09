@@ -110,12 +110,12 @@ object Scala extends Weapon {
   val cure = 90
 
   override def toString: String = {
-    s"学完《快学【Scala】》，修改了自己的血量+${this.cure}！\nO(∩_∩)O哈哈~ 对方精神损失：" + this.damage
+    s"学完《快学【Scala】》，修改了自己的血量+${this.cure}！O(∩_∩)O哈哈~ \n对方精神损失：" + this.damage
   }
 
   override def effect(hero: Hero, hero2: Hero): Unit = {
     hero.health = hero.health + this.cure
-    println(s"嘿嘿(*^▽^*)，发现修改血量的代码在第7行~~我悄悄把自己血量改成了【${hero.current()}】")
+    println(s"嘿嘿(*^▽^*)，发现修改血量的代码在第7行~~我悄悄把自己血量改成【${hero.current()}】")
   }
 }
 
