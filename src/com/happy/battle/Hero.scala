@@ -42,12 +42,14 @@ class Hero {
   //使用法术
   def useMagic(what: Magic, hero: Hero): Unit = {
     val canUse = Random.nextDouble()
-    if (canUse < what.maybe && what.used < what.maxUse) {
-      println("使用法术：" + what)
-      what.used += 1
+    println("使用法术：" + what)
+    what.used += 1
+    if (canUse < what.maybe && what.used <= what.maxUse) {
       this.health = this.health + what.cure
       hero.health = hero.health - what.damage
       what.effect(this, hero)
+    } else {
+      println("o(╯□╰)o咒语念错，施法失败！")
     }
   }
 
