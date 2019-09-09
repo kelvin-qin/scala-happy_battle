@@ -12,7 +12,7 @@ class Magic {
   val maybe = 0.1 //触发概率
   val order = false //使用顺序：是否先于武器使用
   //魔法效果
-  def effect(self: Hero, other: Hero) = {
+  def effect(self: Hero, other: Hero): Unit = {
     //do something
   }
 }

@@ -22,7 +22,7 @@ class Hero {
   val BaseWeapons: List[Weapon] = List[Weapon](Code, Sticks, LongSticks)
 
   //当前血量
-  def current() = health
+  def current(): Int = health
 
   //基础攻击
   def baseAttack(hero: Hero): Unit = {
@@ -42,15 +42,18 @@ class Hero {
   //使用法术
   def useMagic(what: Magic, hero: Hero): Unit = {
     val canUse = Random.nextDouble()
-    println("使用法术：" + what)
     what.used += 1
-    if (canUse < what.maybe && what.used <= what.maxUse) {
-      this.health = this.health + what.cure
-      hero.health = hero.health - what.damage
-      what.effect(this, hero)
-    } else {
-      println("o(╯□╰)o咒语念错，施法失败！")
+    if (what.used <= what.maxUse) {
+      println("使用法术：" + what)
+      if (canUse < what.maybe) {
+        this.health = this.health + what.cure
+        hero.health = hero.health - what.damage
+        what.effect(this, hero)
+      } else {
+        println("o(╯□╰)o咒语念错，施法失败！")
+      }
     }
+
   }
 
   //一次主动战斗，当有人物血量<=0时，返回false
