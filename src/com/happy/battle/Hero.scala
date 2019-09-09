@@ -16,7 +16,7 @@ class Hero {
 
   //可用武器库，作战时每种武器可使用1次
   private var weapons = collection.mutable.ArrayBuffer[Weapon](Sticks,
-    LongSticks, BigKnife, Brick, Java, Scala, Python, Spark, Code)
+    LongSticks, BigKnife, Brick, Java, Scala, Python, Spark, Code, Boom)
 
   //基础武器库，用于特殊武器的随机调用
   val BaseWeapons: List[Weapon] = List[Weapon](Code, Sticks, LongSticks)
@@ -26,17 +26,15 @@ class Hero {
 
   //基础攻击
   def baseAttack(hero: Hero): Unit = {
-    println("***使用小拳拳❥(^_-)*** -" + fist)
+    println("使用小拳拳❥(^_-)*** -" + fist)
     hero.health = hero.health - this.fist
   }
 
   //使用武器
   def useWeapon(what: Weapon, hero: Hero): Unit = {
     println("拿出武器：" + what)
-
     what.effect(this, hero)
     hero.health = hero.health - what.damage
-
   }
 
   //使用法术
@@ -50,7 +48,7 @@ class Hero {
         hero.health = hero.health - what.damage
         what.effect(this, hero)
       } else {
-        println("o(╯□╰)o咒语念错，施法失败！")
+        println("o(╯□╰)忘记咒语，施法失败~！")
       }
     }
 
@@ -66,7 +64,7 @@ class Hero {
       this.baseAttack(hero)
     }
     if (hero.current() <= 0) {
-      hero.useMagic(LifeValue1, this)
+      LifeValueTo1.reAlive(hero)
     }
     println("对手的血量还有" + hero.current())
     if (this.current() > 0 && hero.current() > 0) true else false

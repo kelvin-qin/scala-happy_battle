@@ -1,5 +1,7 @@
 package com.happy.battle
 
+import scala.util.Random
+
 /**
   * 魔法基类
   * 定义人物的法术、技能
@@ -22,16 +24,27 @@ class Magic {
   * @todo 将使用者的生命值设置为1
   *
   */
-object LifeValue1 extends Magic {
+object LifeValueTo1 extends Magic {
   override val maybe: Double = 0.9
 
   override def toString: String = {
-    "【回天术】(对方)!!!"
+    "【回天术】!!!"
   }
 
-  override def effect(self: Hero, other: Hero): Unit = {
-    if (self.current() <= 0) self.health = 1
-    println("（对方）差一丢丢就要挂了！~ (ｷ｀ﾟДﾟ´)")
+  def reAlive(hero: Hero) = {
+    println(this)
+    this.used+=1
+    val canUse = Random.nextDouble()
+    if (this.used <= this.maxUse) {
+      println("对手使用法术：" + this)
+      if (canUse < this.maybe) {
+        hero.health = 1
+        println("可惜，对手差一丢丢就挂啦！")
+      } else {
+        println("o(╯□╰)忘记咒语，施法失败~！")
+      }
+    }
+
   }
 }
 

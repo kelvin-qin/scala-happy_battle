@@ -1,5 +1,6 @@
 package com.happy.battle
 
+import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 /**
@@ -32,6 +33,7 @@ object Code extends Weapon {
   }
 }
 
+
 object Sticks extends Weapon {
   this.damage = 30
 
@@ -40,6 +42,7 @@ object Sticks extends Weapon {
   }
 }
 
+
 object LongSticks extends Weapon {
   this.damage = 40
 
@@ -47,6 +50,7 @@ object LongSticks extends Weapon {
     "【长棍】更容易打到人！" + this.damage
   }
 }
+
 
 object BigKnife extends Weapon {
   this.damage = 0
@@ -61,6 +65,7 @@ object BigKnife extends Weapon {
   }
 }
 
+
 object Brick extends Weapon {
   this.damage = 35
 
@@ -70,6 +75,25 @@ object Brick extends Weapon {
 
 }
 
+
+object Boom extends Weapon {
+  this.damage = 100
+
+  override def toString: String = {
+    "一颗【LC-100炸弹】!" + this.damage
+  }
+
+  override def effect(hero: Hero, hero2: Hero): Unit = {
+    val bingo = Random.nextDouble()
+    if (bingo >= 0.3 && bingo <= 0.7) {
+      println("\"没有什么一发解决不了的问题!\"\n如果有，那就再来一发！（命中要害，++Double）")
+      this.damage = this.damage * 2
+    }
+  }
+
+}
+
+
 object Java extends Weapon {
   this.damage = -50
 
@@ -78,9 +102,10 @@ object Java extends Weapon {
   }
 }
 
+
 object Scala extends Weapon {
   this.damage = 10
-  val cure = 100
+  val cure = 90
 
   override def toString: String = {
     "学完《快学【Scala】》，修改了自己的血量+100！O(∩_∩)O哈哈~\n 对方精神损失：" + this.damage
@@ -92,25 +117,31 @@ object Scala extends Weapon {
   }
 }
 
+
 object Spark extends Weapon {
   val nums = 3
 
   override def toString: String = {
-    "使用【SPARK】分布式攻击，导弹三连发！"
+    "使用【SPARK】分布式系统，导弹三连发！"
   }
 
   override def effect(hero: Hero, hero2: Hero): Unit = {
+    val skills = ArrayBuffer[Int]()
     for (i <- 1 to Spark.nums) {
-      println(s"【Spark】引擎的第${i}次攻击↓")
+      println(s"【Spark】分布式计算引擎的第${i}次攻击↓")
       val spark = Random.nextInt(hero.BaseWeapons.size)
+      skills.+=(spark)
       hero.useWeapon(hero.BaseWeapons(spark), hero2)
     }
-    print("分布大法好啊\\(^o^)/~")
+    if (skills.distinct.size == 1) {
+      print("***三点一线，一颗炸弹***Boom！！！")
+    }
   }
 }
 
+
 object Python extends Weapon {
-  this.damage = 100
+  this.damage = 80
   val selfDamage: Int = this.damage / 2
 
   override def toString: String = {
