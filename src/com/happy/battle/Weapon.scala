@@ -11,7 +11,7 @@ class Weapon {
   var damage = 0
 
   //武器附加效果
-  def effect(hero: Hero, hero2: Hero) = {
+  def effect(hero: Hero, hero2: Hero): Unit = {
     //do something
   }
 }
@@ -77,6 +77,7 @@ object Brick extends Weapon {
 
 
 object Boom extends Weapon {
+  val baseDamage = 100
   this.damage = 100
 
   override def toString: String = {
@@ -86,7 +87,7 @@ object Boom extends Weapon {
   override def effect(hero: Hero, hero2: Hero): Unit = {
     val bingo = Random.nextDouble()
     if (bingo >= 0.3 && bingo <= 0.7) {
-      this.damage = this.damage * 2
+      this.damage = baseDamage * 2
       println("\"没有什么一发解决不了的问题!\"\n\"如果有，那就再来一发！\"（命中要害，伤害翻倍！）")
     }
   }

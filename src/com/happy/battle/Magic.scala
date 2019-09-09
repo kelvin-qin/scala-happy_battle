@@ -31,8 +31,7 @@ object LifeValueTo1 extends Magic {
     "【回天术】!!!"
   }
 
-  def reAlive(hero: Hero) = {
-    println(this)
+  def reAlive(hero: Hero): Unit = {
     this.used+=1
     val canUse = Random.nextDouble()
     if (this.used <= this.maxUse) {
