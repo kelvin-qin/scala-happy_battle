@@ -85,6 +85,7 @@ object Boom extends Weapon {
   }
 
   override def effect(hero: Hero, hero2: Hero): Unit = {
+    this.damage = baseDamage
     val bingo = Random.nextDouble()
     if (bingo >= 0.3 && bingo <= 0.7) {
       this.damage = baseDamage * 2
