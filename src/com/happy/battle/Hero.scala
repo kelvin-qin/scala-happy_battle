@@ -1,5 +1,9 @@
 package com.happy.battle
 
+import java.util.logging.Logger
+
+import com.scala.big.happy.battle.BattleProgress
+
 import scala.util.Random
 
 /**
@@ -9,6 +13,7 @@ import scala.util.Random
   *
   */
 class Hero {
+  private var name = ""
 
   var health: Int = 300 //初始生命值
 
@@ -24,8 +29,12 @@ class Hero {
   //当前血量
   def current(): Int = health
 
+  override def toString: String = {
+    this.name
+  }
+
   //基础攻击
-  def baseAttack(hero: Hero): Unit = {
+  def useFist(hero: Hero): Unit = {
     println("使用小拳拳❥(^_-)*** -" + fist)
     hero.health = hero.health - this.fist
   }
@@ -54,14 +63,14 @@ class Hero {
 
   }
 
-  //一次主动战斗，当有人物血量<=0时，返回false
-  def battle(hero: Hero): Boolean = {
+  //一次主动攻击，当有人物血量<=0时，返回false
+  def attack(hero: Hero): Boolean = {
     if (this.weapons.nonEmpty) {
       val num = Random.nextInt(weapons.size)
       this.useWeapon(weapons(num), hero)
       this.weapons = weapons.-(weapons(num))
     } else {
-      this.baseAttack(hero)
+      this.useFist(hero)
     }
     if (hero.current() <= 0) {
       LifeValueTo1.reAlive(hero)
@@ -70,4 +79,45 @@ class Hero {
     if (this.current() > 0 && hero.current() > 0) true else false
   }
 
+  /**
+    * 一场分出胜负的战斗
+    *
+    * @param hero 对手英雄
+    */
+  def battle(hero: Hero): Hero = {
+    val logger = Logger.getLogger("BATTLE")
+    var isAlive = true
+    var i = 0
+    var winner = this
+    while (isAlive) {
+      i += 1
+      logger.info(s"###########第${i}回合############")
+      println("左方出手：→_→ →_→ ")
+      isAlive = this.attack(hero)
+      println()
+      if (isAlive) {
+        println("右方出手：←_← ←_← ")
+        isAlive = hero.attack(this)
+        BattleProgress.printShow
+        if (!isAlive) {
+          winner = hero
+          logger.info(s"右方${winner.name}胜利！")
+        }
+      } else {
+        logger.info(s"左方${winner.name}胜利！")
+      }
+      Thread.sleep(1500)
+    }
+    winner
+  }
 }
+
+object Hero {
+  def apply(name: String): Hero = {
+    val hero = new Hero()
+    hero.name = name
+    hero
+  }
+}
+
+
