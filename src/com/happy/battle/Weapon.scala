@@ -88,8 +88,8 @@ object Boom extends Weapon {
     this.damage = baseDamage
     val bingo = Random.nextDouble()
     if (bingo >= 0.3 && bingo <= 0.7) {
-      this.damage = baseDamage * 2
       println("\"没有什么一发解决不了的问题!\"\n\"如果有，那就再来一发！\"（命中要害，伤害翻倍！）")
+      this.damage = baseDamage * 2
     }
   }
 
@@ -136,7 +136,8 @@ object Spark extends Weapon {
       hero.useWeapon(hero.BaseWeapons(spark), hero2)
     }
     if (skills.distinct.size == 1) {
-      print("***三点一线，一颗炸弹***Boom！！！")
+      print("***三点一线，加送炸弹***Boom！！！\n")
+      hero.useWeapon(Boom,hero2)
     }
   }
 }

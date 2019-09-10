@@ -17,6 +17,8 @@ class Hero {
 
   var health: Int = 300 //初始生命值
 
+  var usedReAlive = 0
+
   private val fist: Int = 25 //基础攻击，拳头伤害
 
   //可用武器库，作战时每种武器可使用1次
@@ -24,7 +26,7 @@ class Hero {
     LongSticks, BigKnife, Brick, Java, Scala, Python, Spark, Code, Boom)
 
   //基础武器库，用于特殊武器的随机调用
-  val BaseWeapons: List[Weapon] = List[Weapon](Code, Sticks, LongSticks)
+  val BaseWeapons: List[Weapon] = List[Weapon](Sticks,LongSticks,Code)
 
   //当前血量
   def current(): Int = health
@@ -49,8 +51,7 @@ class Hero {
   //使用法术
   def useMagic(what: Magic, hero: Hero): Unit = {
     val canUse = Random.nextDouble()
-    what.used += 1
-    if (what.used <= what.maxUse) {
+    if (hero.usedReAlive <= what.maxUse) {
       println("使用法术：" + what)
       if (canUse < what.maybe) {
         this.health = this.health + what.cure
@@ -72,7 +73,7 @@ class Hero {
     } else {
       this.useFist(hero)
     }
-    if (hero.current() <= 0) {
+    if (hero.current() <= 0 && hero.usedReAlive == 0) {
       LifeValueTo1.reAlive(hero)
     }
     println("对手的血量还有" + hero.current())
@@ -113,9 +114,14 @@ class Hero {
 }
 
 object Hero {
-  def apply(name: String): Hero = {
+  def apply(name: String, life: Int = 300): Hero = {
     val hero = new Hero()
     hero.name = name
+    if (life > 100) {
+      hero.health = life
+    } else {
+      hero.health = 300
+    }
     hero
   }
 }

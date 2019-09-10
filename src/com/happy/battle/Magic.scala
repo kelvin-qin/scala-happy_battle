@@ -10,7 +10,6 @@ class Magic {
   var damage = 0 //伤害
   var cure = 0 //治疗
   val maxUse = 1 //最大使用次数
-  var used = 0 //已使用次数
   val maybe = 0.1 //触发概率
   val order = false //使用顺序：是否先于武器使用
   //魔法效果
@@ -32,9 +31,9 @@ object LifeValueTo1 extends Magic {
   }
 
   def reAlive(hero: Hero): Unit = {
-    this.used+=1
+    hero.usedReAlive+=1
     val canUse = Random.nextDouble()
-    if (this.used <= this.maxUse) {
+    if (hero.usedReAlive <= this.maxUse) {
       println("对手使用法术：" + this)
       if (canUse < this.maybe) {
         hero.health = 1
