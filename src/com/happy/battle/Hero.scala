@@ -7,26 +7,28 @@ import com.scala.big.happy.battle.BattleProgress
 import scala.util.Random
 
 /**
-  * 人物【英雄】类
+  * 主角【英雄】类
   * 当前比较简单，只定义了生命值
   * 还可以定义力量，速度，幸运等
   *
   */
-class Hero {
-  private var name = ""
+class Hero(val name: String) {
+
+  private var usedReAlive = false
+
+  private val fist: Int = 25 //基础攻击，拳头伤害
 
   var health: Int = 300 //初始生命值
 
-  var usedReAlive = 0
-
-  private val fist: Int = 25 //基础攻击，拳头伤害
+  var magicValue = 0
 
   //可用武器库，作战时每种武器可使用1次
   private var weapons = collection.mutable.ArrayBuffer[Weapon](Sticks,
     LongSticks, BigKnife, Brick, Java, Scala, Python, Spark, Code, Boom)
 
   //基础武器库，用于特殊武器的随机调用
-  val BaseWeapons: List[Weapon] = List[Weapon](Sticks,LongSticks,Code)
+  val BaseWeapons: List[Weapon] = List[Weapon](Sticks, LongSticks, Code)
+
 
   //当前血量
   def current(): Int = health
@@ -43,7 +45,7 @@ class Hero {
 
   //使用武器
   def useWeapon(what: Weapon, hero: Hero): Unit = {
-    println("拿出武器：" + what)
+    println("拿出[武器]：" + what)
     what.effect(this, hero)
     hero.health = hero.health - what.damage
   }
@@ -51,14 +53,14 @@ class Hero {
   //使用法术
   def useMagic(what: Magic, hero: Hero): Unit = {
     val canUse = Random.nextDouble()
-    if (hero.usedReAlive <= what.maxUse) {
-      println("使用法术：" + what)
+    if (hero.magicValue <= what.maxUse) {
+      println("使用[法术]：" + what)
       if (canUse < what.maybe) {
         this.health = this.health + what.cure
         hero.health = hero.health - what.damage
         what.effect(this, hero)
       } else {
-        println("o(╯□╰)忘记咒语，施法失败~！")
+        println("忘记咒语，施法失败~o(╯□╰)！")
       }
     }
 
@@ -73,8 +75,8 @@ class Hero {
     } else {
       this.useFist(hero)
     }
-    if (hero.current() <= 0 && hero.usedReAlive == 0) {
-      LifeValueTo1.reAlive(hero)
+    if (!hero.usedReAlive) {
+      hero.usedReAlive = LifeValueTo1.reAlive(hero)
     }
     println("对手的血量还有" + hero.current())
     if (this.current() > 0 && hero.current() > 0) true else false
@@ -115,8 +117,7 @@ class Hero {
 
 object Hero {
   def apply(name: String, life: Int = 300): Hero = {
-    val hero = new Hero()
-    hero.name = name
+    val hero = new Hero(name)
     if (life > 100) {
       hero.health = life
     } else {

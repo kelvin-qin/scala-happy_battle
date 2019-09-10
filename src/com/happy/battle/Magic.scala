@@ -30,19 +30,20 @@ object LifeValueTo1 extends Magic {
     "【回天术】!!!"
   }
 
-  def reAlive(hero: Hero): Unit = {
-    hero.usedReAlive+=1
-    val canUse = Random.nextDouble()
-    if (hero.usedReAlive <= this.maxUse) {
-      println("对手使用法术：" + this)
+  def reAlive(hero: Hero): Boolean = {
+    if (hero.current() <= 0) {
+      println("对手使用[法术]：" + this)
+      val canUse = Random.nextDouble()
       if (canUse < this.maybe) {
         hero.health = 1
-        println("可惜，对手差一丢丢就挂啦！")
+        println("\"可惜，对手差一丢丢就挂啦！\"")
       } else {
-        println("o(╯□╰)忘记咒语，施法失败~！")
+        println("o(╯□╰)忘记咒语，施法失败(对手)~！")
       }
+      true
+    } else {
+      false
     }
-
   }
 }
 
