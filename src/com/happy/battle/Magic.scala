@@ -35,7 +35,7 @@ object LifeValueTo1 extends Magic {
       println("对手使用[法术]：" + this)
       val canUse = Random.nextDouble()
       if (canUse < this.maybe) {
-        hero.health = 1
+        hero.lifeValue = 1
         println("\"可惜，对手差一丢丢就挂啦！\"")
       } else {
         println("o(╯□╰)忘记咒语，施法失败(对手)~！")
@@ -61,7 +61,7 @@ object StealLife extends Magic {
   }
 
   override def effect(self: Hero, other: Hero): Unit = {
-    self.health = self.health + (this.damage * 0.8).toInt
+    self.lifeValue = self.lifeValue + (this.damage * 0.8).toInt
     println("挖东墙补西墙，欧嘞！~ (ｷ｀ﾟДﾟ´)")
   }
 }
