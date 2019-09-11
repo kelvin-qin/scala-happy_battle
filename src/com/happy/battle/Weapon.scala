@@ -114,7 +114,7 @@ object Scala extends Weapon {
   }
 
   override def effect(hero: Hero, hero2: Hero): Unit = {
-    hero.health = hero.health + this.cure
+    hero.lifeValue = hero.lifeValue + this.cure
     println(s"嘿嘿(*^▽^*)，发现修改血量的代码在第7行~~我悄悄把自己血量改成【${hero.current()}】")
   }
 }
@@ -152,9 +152,9 @@ object Python extends Weapon {
   }
 
   override def effect(hero: Hero, hero2: Hero): Unit = {
-    hero.health = hero.health - this.selfDamage
-    if (hero.health <= 0) {
-      hero.health = 1
+    hero.lifeValue = hero.lifeValue - this.selfDamage
+    if (hero.lifeValue <= 0) {
+      hero.lifeValue = 1
     }
     println(s"[杀敌一千，自损八百！]~ \n自己还剩【${hero.current()}】血量！")
   }
