@@ -16,13 +16,27 @@ class Hero(val name: String) {
 
   private var usedReAlive = false
 
-  private val fist: Int = 25 //基础攻击，拳头伤害
+  private val fist: Int = 25
 
-  var health: Int = 300 //初始生命值
+  var lifeValue: Int = 300
 
   var magicValue = 0
 
-  //可用武器库，作战时每种武器可使用1次
+  val speed = 10
+
+  val agility = 0
+
+  val strength = 0
+
+  val intelligence = 0
+
+  val heroType = "[]"
+
+  val heroProfession = "[Coder]"
+
+  val status = 0
+
+  //可用武器库
   private var weapons = collection.mutable.ArrayBuffer[Weapon](Sticks,
     LongSticks, BigKnife, Brick, Java, Scala, Python, Spark, Code, Boom)
 
@@ -31,7 +45,7 @@ class Hero(val name: String) {
 
 
   //当前血量
-  def current(): Int = health
+  def current(): Int = lifeValue
 
   override def toString: String = {
     this.name
@@ -40,14 +54,14 @@ class Hero(val name: String) {
   //基础攻击
   def useFist(hero: Hero): Unit = {
     println("使用小拳拳❥(^_-)*** -" + fist)
-    hero.health = hero.health - this.fist
+    hero.lifeValue = hero.lifeValue - this.fist
   }
 
   //使用武器
   def useWeapon(what: Weapon, hero: Hero): Unit = {
     println("拿出[武器]：" + what)
     what.effect(this, hero)
-    hero.health = hero.health - what.damage
+    hero.lifeValue = hero.lifeValue - what.damage
   }
 
   //使用法术
@@ -56,8 +70,8 @@ class Hero(val name: String) {
     if (hero.magicValue <= what.maxUse) {
       println("使用[法术]：" + what)
       if (canUse < what.maybe) {
-        this.health = this.health + what.cure
-        hero.health = hero.health - what.damage
+        this.lifeValue = this.lifeValue + what.cure
+        hero.lifeValue = hero.lifeValue - what.damage
         what.effect(this, hero)
       } else {
         println("忘记咒语，施法失败~o(╯□╰)！")
@@ -119,9 +133,9 @@ object Hero {
   def apply(name: String, life: Int = 300): Hero = {
     val hero = new Hero(name)
     if (life > 100) {
-      hero.health = life
+      hero.lifeValue = life
     } else {
-      hero.health = 300
+      hero.lifeValue = 300
     }
     hero
   }
