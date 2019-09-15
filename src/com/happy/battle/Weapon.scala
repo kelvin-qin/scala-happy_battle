@@ -67,10 +67,18 @@ object BigKnife extends Weapon {
 
 
 object Brick extends Weapon {
-  this.damage = 35
+  this.damage = 30
+  val num = 1
 
   override def toString: String = {
-    "一【砖头】下去,可能冒星星(✖人✖) !" + this.damage
+    "一【砖头】下去" + this.damage
+  }
+
+  override def effect(hero: Hero, hero2: Hero): Unit = {
+    if (Random.nextDouble() > 0.5) {
+      hero2.status = num
+      println(s"~砸晕对手(✖人✖) ##${this.num}回合!##")
+    }
   }
 
 }
@@ -137,7 +145,7 @@ object Spark extends Weapon {
     }
     if (skills.distinct.size == 1) {
       print("***三点一线，加送炸弹***Boom！！！\n")
-      hero.useWeapon(Boom,hero2)
+      hero.useWeapon(Boom, hero2)
     }
   }
 }
