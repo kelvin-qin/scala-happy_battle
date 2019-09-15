@@ -1,9 +1,5 @@
 package com.happy.battle
 
-import java.util.logging.Logger
-
-import com.scala.big.happy.battle.BattleProgress
-
 import scala.util.Random
 
 /**
@@ -15,8 +11,6 @@ import scala.util.Random
 class Hero(val name: String) {
 
   private var usedReAlive = false
-
-  private val fist: Int = 25
 
   var lifeValue: Int = 300
 
@@ -34,7 +28,11 @@ class Hero(val name: String) {
 
   val heroProfession = "[Coder]"
 
-  val status = 0
+  var status = 0
+  val buffStatus: Map[Buff, Int] = Map()
+  val deBuffStatus: Map[Buff, Int] = Map()
+
+  private val fist: Int = 25 + strength
 
   //可用武器库
   private var weapons = collection.mutable.ArrayBuffer[Weapon](Sticks,
@@ -48,7 +46,7 @@ class Hero(val name: String) {
   def current(): Int = lifeValue
 
   override def toString: String = {
-    this.name
+    "【" + this.name + "】"
   }
 
   //基础攻击
@@ -94,38 +92,6 @@ class Hero(val name: String) {
     }
     println("对手的血量还有" + hero.current())
     if (this.current() > 0 && hero.current() > 0) true else false
-  }
-
-  /**
-    * 一场分出胜负的战斗
-    *
-    * @param hero 对手英雄
-    */
-  def battle(hero: Hero): Hero = {
-    val logger = Logger.getLogger("BATTLE")
-    var isAlive = true
-    var i = 0
-    var winner = this
-    while (isAlive) {
-      i += 1
-      logger.info(s"###########第${i}回合############")
-      println("左方出手：→_→ →_→ ")
-      isAlive = this.attack(hero)
-      println()
-      if (isAlive) {
-        println("右方出手：←_← ←_← ")
-        isAlive = hero.attack(this)
-        BattleProgress.printShow
-        if (!isAlive) {
-          winner = hero
-          logger.info(s"右方${winner.name}胜利！")
-        }
-      } else {
-        logger.info(s"左方${winner.name}胜利！")
-      }
-      Thread.sleep(1500)
-    }
-    winner
   }
 }
 
